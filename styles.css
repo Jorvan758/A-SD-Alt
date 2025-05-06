@@ -1,0 +1,64 @@
+a{
+    color: greenyellow;
+}
+
+body{
+    background: black;
+}
+
+.column{
+    float: left;
+    width: 33.33%;
+}
+
+div{
+    text-align: center;
+}
+
+h1{
+    color: white;
+    text-align: center;
+}
+
+label{
+    color: white;
+    line-height: 1;
+    text-align: center;
+}
+
+p{
+    color: white;
+    line-height: 1;
+    text-align: center;
+}
+
+.row::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.scrollable{
+    height: 540px;
+    overflow-y: auto;
+}
+
+select{
+    align-self: center;
+    background-color: black;
+    color: white;
+}
+
+span{
+    color: white;
+    text-align: center;
+}
+
+.verticalLine{
+    background-color: #ffffff;
+    border: 1px ridge #ffffff;
+    border-radius: 2px;
+    height: 210px;
+    left: 100%;
+    width: 0px;
+}

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--<meta name="description" content="AVT Multimodal Dataset">-->
+        <title>LLM AVT Stable Diffusion</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <script src="script.js"></script>
+        <h1 style="font-size:60px;">LLM AVT Stable Diffusion</h1>
+        <p>This is a small preview of the results that can be obtained with the audio-to-image model from our soon to be published research<br>
+        <p style="font-size:35px;margin:0;margin-top:0;margin-bottom:0;"><em>Acoustic Visual Transformations: Transfer Learning for Audio-Driven Image-to-Image Translation</em></p>
+        <p>by Jorge E. León and Miguel Carrasco (Universidad Adolfo Ibánez (UAI), Santiago, Chile).<br><br></p>
+        </p>
+        <hr><br>
+        <div class="row">
+            <div class="column" style="width:25.00%;">
+                <label for="reference_image">Reference image: </label>
+                <select name="" id="reference_image" onchange="select_image()">
+                    <option value="ninguna">None</option>
+                    <option value="1">Image 1</option>
+                    <option value="4">Image 2</option>
+                    <option value="5">Image 3</option>
+                    <option value="7">Image 4</option>
+                    <option value="10">Image 5</option>
+                    <option value="12">Image 6</option>
+                    <option value="13">Image 7</option>
+                    <option value="16">Image 8</option>
+                    <option value="18">Image 9</option>
+                    <option value="19">Image 10</option>
+                </select>
+            </div>
+            <div class="column" style="width:50.00%;">
+                <label for="model_version">Model version: </label>
+                <select name="" id="model_version" onchange="select_generation_selected()">
+                    <option value="yo">Human</option>
+                    <option value="chatgpt">ChatGPT o3-mini</option>
+                    <option value="deepseek">DeepSeek</option>
+                    <option value="gemini">Gemini 2.5 Pro Preview 03-25</option>
+                    <option value="grok">Grok 3</option>
+                    <option value="llms">Averaged chatbots</option>
+                    <option value="llmsyyo">Averaged chatbots and human</option>
+                </select>
+            </div>
+            <div class="column" style="width:25.00%;">
+                <label for="encoder_input">Encoder input: </label>
+                <select name="" id="encoder_input" onchange="select_audio()">
+                    <option value="a bonfire">A bonfire</option>
+                    <option value="a dog barking">A dog barking</option>
+                    <option value="a guitar being played">A guitar being played</option>
+                    <option value="a gun being shot">A gun being shot</option>
+                    <option value="a lion roaring">A lion roaring</option>
+                    <option value="an engine blowing air">An engine blowing air</option>
+                    <option value="an organ being played">An organ being played</option>
+                    <option value="children talking and playing">Children talking and playing</option>
+                    <option value="the interior of a coffee shop">The interior of a coffee shop</option>
+                    <option value="waves crashing against rocks">Waves crashing against rocks</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="column" style="width:25.00%;">
+                <img id="image_file" src="" width="46%;">
+            </div>
+            <div class="column" style="width:50.00%;">
+                <div class="column" style="width:48.00%;">
+                    <img id="generation_selected_1" src="" width="48%;">
+                    <img id="generation_selected_2" src="" width="48%;">
+                    <br>
+                    <p>Conditioned only with audio</p>
+                </div>
+                <div class="column" style="width:0.40%;">
+                    <div class="verticalLine"></div>
+                </div>
+                <div class="column" style="width:48.00%;">
+                    <img id="generation_selected_3" src="" width="48%;">
+                    <img id="generation_selected_4" src="" width="48%;">
+                    <br>
+                    <p>Conditioned with audio and text</p>
+                </div>
+            </div>
+            <div class="column" style="width:25.00%;">
+                <br><br><br>
+                <audio controls><source id="audio_file" src=""></audio>
+            </div>
+        </div>
+        <hr><br>
+        <div class="row">
+            <div class="column" style="width:20.00%;">
+                <p>Images created with random encodings<br>(<em>theorical worst case scenario</em>)</p>
+                <img id="generation_random_1" src="" width="57.5%;">
+                <br>
+                <img id="generation_random_2" src="" width="57.5%;">
+            </div>
+            <div class="column" style="width:0.40%;">
+                <div class="verticalLine" style="height:525px;"></div>
+            </div>
+            <div class="column" style="width:58.00%;">
+                <div class="scrollable">
+                    <div class="row">
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_yo_1" src="" width="42%;">
+                            <img id="generation_yo_2" src="" width="42%;">
+                            <br>
+                            <p>Human<br>Conditioned only with audio</p>
+                        </div>
+                        <div class="column" style="width:0.40%;">
+                            <div class="verticalLine" style="height:225px;"></div>
+                        </div>
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_yo_3" src="" width="42%;">
+                            <img id="generation_yo_4" src="" width="42%;">
+                            <br>
+                            <p>Human<br>Conditioned with audio and text</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_chatgpt_1" src="" width="42%;">
+                            <img id="generation_chatgpt_2" src="" width="42%;">
+                            <br>
+                            <p>ChatGPT o3-mini<br>Conditioned only with audio</p>
+                        </div>
+                        <div class="column" style="width:0.40%;">
+                            <div class="verticalLine" style="height:225px;"></div>
+                        </div>
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_chatgpt_3" src="" width="42%;">
+                            <img id="generation_chatgpt_4" src="" width="42%;">
+                            <br>
+                            <p>ChatGPT o3-mini<br>Conditioned with audio and text</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_deepseek_1" src="" width="42%;">
+                            <img id="generation_deepseek_2" src="" width="42%;">
+                            <br>
+                            <p>DeepSeek<br>Conditioned only with audio</p>
+                        </div>
+                        <div class="column" style="width:0.40%;">
+                            <div class="verticalLine" style="height:225px;"></div>
+                        </div>
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_deepseek_3" src="" width="42%;">
+                            <img id="generation_deepseek_4" src="" width="42%;">
+                            <br>
+                            <p>DeepSeek<br>Conditioned with audio and text</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_gemini_1" src="" width="42%;">
+                            <img id="generation_gemini_2" src="" width="42%;">
+                            <br>
+                            <p>Gemini 2.5 Pro Preview 03-25<br>Conditioned only with audio</p>
+                        </div>
+                        <div class="column" style="width:0.40%;">
+                            <div class="verticalLine" style="height:225px;"></div>
+                        </div>
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_gemini_3" src="" width="42%;">
+                            <img id="generation_gemini_4" src="" width="42%;">
+                            <br>
+                            <p>Gemini 2.5 Pro Preview 03-25<br>Conditioned with audio and text</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_grok_1" src="" width="42%;">
+                            <img id="generation_grok_2" src="" width="42%;">
+                            <br>
+                            <p>Grok 3<br>Conditioned only with audio</p>
+                        </div>
+                        <div class="column" style="width:0.40%;">
+                            <div class="verticalLine" style="height:225px;"></div>
+                        </div>
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_grok_3" src="" width="42%;">
+                            <img id="generation_grok_4" src="" width="42%;">
+                            <br>
+                            <p>Grok 3<br>Conditioned with audio and text</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_llms_1" src="" width="42%;">
+                            <img id="generation_llms_2" src="" width="42%;">
+                            <br>
+                            <p>Averaged chatbots<br>Conditioned only with audio</p>
+                        </div>
+                        <div class="column" style="width:0.40%;">
+                            <div class="verticalLine" style="height:225px;"></div>
+                        </div>
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_llms_3" src="" width="42%;">
+                            <img id="generation_llms_4" src="" width="42%;">
+                            <br>
+                            <p>Averaged chatbots<br>Conditioned with audio and text</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_llmsyyo_1" src="" width="42%;">
+                            <img id="generation_llmsyyo_2" src="" width="42%;">
+                            <br>
+                            <p>Averaged chatbots and human<br>Conditioned only with audio</p>
+                        </div>
+                        <div class="column" style="width:0.40%;">
+                            <div class="verticalLine" style="height:225px;"></div>
+                        </div>
+                        <div class="column" style="width:48.00%;">
+                            <img id="generation_llmsyyo_3" src="" width="42%;">
+                            <img id="generation_llmsyyo_4" src="" width="42%;">
+                            <br>
+                            <p>Averaged chatbots and human<br>Conditioned with audio and text</p>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <!-- <div class="column" style="width:0.40%;">
+                <div class="verticalLine" style="height:425px;"></div>
+            </div> -->
+            <div class="column" style="width:20.00%;">
+                <p>Images created with the original text encoder<br>(<em>theorical best case scenario</em>)</p>
+                <img id="generation_t_1" src="" width="57.5%;">
+                <br>
+                <img id="generation_t_2" src="" width="57.5%;">
+            </div>
+        </div>
+    </body>
+</html>
